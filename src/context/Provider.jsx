@@ -7,8 +7,9 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
 
   const PLANETS_DATA = {
-    data,
-    setData,
+    allDatas: {
+      data,
+    },
   };
 
   const getDataAPI = async () => {
