@@ -5,10 +5,15 @@ import fetchAPI from '../services/API';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
+  const [name, setFilterName] = useState([]);
 
   const PLANETS_DATA = {
     allDatas: {
       data,
+    },
+    filterByName: {
+      name,
+      setFilterName,
     },
   };
 
@@ -20,6 +25,12 @@ function Provider({ children }) {
   useEffect(() => {
     getDataAPI();
   }, []);
+
+  useEffect(() => {
+    const filterName = data.filter((planet) => planet.name
+      .toLowerCase().includes(name));
+    setFilterData(filterName);
+  }, [data, name]);
 
   return (
     <Context.Provider value={ PLANETS_DATA }>
