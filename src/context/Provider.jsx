@@ -6,6 +6,7 @@ import fetchAPI from '../services/API';
 function Provider({ children }) {
   const [data, setData] = useState([]);
   const [name, setFilterName] = useState([]);
+  const [filter, setFilter] = useState([]);
 
   const PLANETS_DATA = {
     allDatas: {
@@ -14,6 +15,10 @@ function Provider({ children }) {
     filterByName: {
       name,
       setFilterName,
+    },
+    filtered: {
+      filter,
+      setFilter,
     },
   };
 
@@ -29,7 +34,7 @@ function Provider({ children }) {
   useEffect(() => {
     const filterName = data.filter((planet) => planet.name
       .toLowerCase().includes(name));
-    setFilterData(filterName);
+    setFilter(filterName);
   }, [data, name]);
 
   return (

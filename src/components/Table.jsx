@@ -5,7 +5,7 @@ function Table() {
   const tableHeader = ['Name', 'Rotation Period', 'Orbital Period', 'Diameter',
     'Climate', 'Gravity', 'Terrain', 'Surface Water', 'Population', 'Films',
     'Created', 'Edited', 'URL'];
-  const { allDatas: { data } } = useContext(Context);
+  const { filtered: { filter } } = useContext(Context);
   return (
     <main>
       <table>
@@ -19,7 +19,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          { data.map((planet) => (
+          { filter.map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
               <td>{planet.rotation_period}</td>
