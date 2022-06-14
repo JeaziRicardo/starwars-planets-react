@@ -7,6 +7,11 @@ function Provider({ children }) {
   const [data, setData] = useState([]);
   const [name, setFilterName] = useState([]);
   const [filter, setFilter] = useState([]);
+  const [filterNumeric, setFilterNumeric] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  });
 
   const PLANETS_DATA = {
     allDatas: {
@@ -15,6 +20,10 @@ function Provider({ children }) {
     filterByName: {
       name,
       setFilterName,
+    },
+    filterByNumericValues: {
+      filterNumeric,
+      setFilterNumeric,
     },
     filtered: {
       filter,

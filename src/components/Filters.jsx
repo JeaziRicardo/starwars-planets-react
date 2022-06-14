@@ -2,11 +2,17 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 
 function Filters() {
-  const { filterByName: { setFilterName } } = useContext(Context);
+  const { filterByName: { setFilterName },
+    filterByNumericValues: { setFilterNumeric } } = useContext(Context);
 
-  const handleChanges = ({ target }) => {
+  const handleNameFilter = ({ target }) => {
     const { value } = target;
     setFilterName(value.toLowerCase());
+  };
+
+  const handleChanges = ({ target }) => {
+    const { id, value } = target;
+    setFilterNumeric((prevState) => ({ ...prevState, [id]: value }));
   };
 
   return (
@@ -14,14 +20,15 @@ function Filters() {
       <input
         type="text"
         data-testid="name-filter"
-        onChange={ handleChanges }
+        onChange={ handleNameFilter }
       />
       <label htmlFor="column">
-        Colunm
+        Column
         <select
           data-testid="column-filter"
           name="column"
           id="column"
+          onChange={ handleChanges }
         >
           <option value="population">Population</option>
           <option value="orbital_period">Orbital Period</option>
@@ -36,18 +43,20 @@ function Filters() {
           data-testid="comparison-filter"
           name="comparison"
           id="comparison"
+          onChange={ handleChanges }
         >
           <option value="maior que">Maior que</option>
           <option value="menor que">Menor que</option>
           <option value="igual a">Igual a</option>
         </select>
       </label>
-      <label htmlFor="value-filter">
+      <label htmlFor="value">
         <input
           data-testid="value-filter"
           type="number"
-          name="value-filter"
-          id="value-filter"
+          name="value"
+          id="value"
+          onChange={ handleChanges }
         />
       </label>
       <button
