@@ -2,8 +2,11 @@ import React, { useContext } from 'react';
 import Context from '../context/Context';
 
 function Filters() {
-  const { filterByName: { setFilterName },
-    filterByNumericValues: { setFilterNumeric } } = useContext(Context);
+  const {
+    filterByName: { setFilterName },
+    filterByClick: { setFilterClick },
+    filterByNumericValues: { filterNumeric, setFilterNumeric },
+  } = useContext(Context);
 
   const handleNameFilter = ({ target }) => {
     const { value } = target;
@@ -13,6 +16,10 @@ function Filters() {
   const handleChanges = ({ target }) => {
     const { id, value } = target;
     setFilterNumeric((prevState) => ({ ...prevState, [id]: value }));
+  };
+
+  const handleClick = () => {
+    setFilterClick([{ ...filterNumeric }]);
   };
 
   return (
@@ -30,11 +37,11 @@ function Filters() {
           id="column"
           onChange={ handleChanges }
         >
-          <option value="population">Population</option>
-          <option value="orbital_period">Orbital Period</option>
-          <option value="diameter">Diameter</option>
-          <option value="rotation_period">Rotation Period</option>
-          <option value="surface_water">Surface Water</option>
+          <option value="population">population</option>
+          <option value="orbital_period">orbital_period</option>
+          <option value="diameter">diameter</option>
+          <option value="rotation_period">rotation_period</option>
+          <option value="surface_water">surface_water</option>
         </select>
       </label>
       <label htmlFor="comparison">
@@ -45,9 +52,9 @@ function Filters() {
           id="comparison"
           onChange={ handleChanges }
         >
-          <option value="maior que">Maior que</option>
-          <option value="menor que">Menor que</option>
-          <option value="igual a">Igual a</option>
+          <option value="maior que">maior que</option>
+          <option value="menor que">menor que</option>
+          <option value="igual a">igual a</option>
         </select>
       </label>
       <label htmlFor="value">
@@ -57,11 +64,13 @@ function Filters() {
           name="value"
           id="value"
           onChange={ handleChanges }
+          value={ filterNumeric.value }
         />
       </label>
       <button
         data-testid="button-filter"
         type="button"
+        onClick={ handleClick }
       >
         Filtrar
       </button>

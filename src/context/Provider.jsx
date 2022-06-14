@@ -5,8 +5,9 @@ import fetchAPI from '../services/API';
 
 function Provider({ children }) {
   const [data, setData] = useState([]);
-  const [name, setFilterName] = useState([]);
+  const [name, setFilterName] = useState('');
   const [filter, setFilter] = useState([]);
+  const [filterClick, setFilterClick] = useState([]);
   const [filterNumeric, setFilterNumeric] = useState({
     column: 'population',
     comparison: 'maior que',
@@ -24,6 +25,10 @@ function Provider({ children }) {
     filterByNumericValues: {
       filterNumeric,
       setFilterNumeric,
+    },
+    filterByClick: {
+      filterClick,
+      setFilterClick,
     },
     filtered: {
       filter,
@@ -43,8 +48,22 @@ function Provider({ children }) {
   useEffect(() => {
     const filterName = data.filter((planet) => planet.name
       .toLowerCase().includes(name));
-    setFilter(filterName);
-  }, [data, name]);
+
+    const filterCondition = filterClick.reduce((acc, filters) => acc.filter((datas) => {
+      switch (filters.comparison) {
+      case 'maior que':
+        return +(datas[filters.column]) > +(filters.value);
+      case 'menor que':
+        return +(datas[filters.column]) < +(filters.value);
+      case 'igual a':
+        return +(datas[filters.column]) === +(filters.value);
+      default:
+        return undefined;
+      }
+    }), filterName);
+
+    setFilter(filterCondition);
+  }, [data, name, filterClick]);
 
   return (
     <Context.Provider value={ PLANETS_DATA }>
