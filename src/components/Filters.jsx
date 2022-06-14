@@ -19,7 +19,7 @@ function Filters() {
   };
 
   const handleClick = () => {
-    setFilterClick([{ ...filterNumeric }]);
+    setFilterClick((prevState) => ([...prevState, { ...filterNumeric }]));
   };
 
   return (
