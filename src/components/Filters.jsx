@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Context from '../context/Context';
 
 function Filters() {
@@ -7,6 +7,10 @@ function Filters() {
     filterByClick: { setFilterClick },
     filterByNumericValues: { filterNumeric, setFilterNumeric },
   } = useContext(Context);
+
+  const [optionsColumn, setOptionsColumn] = useState(['population', 'orbital_period',
+    'diameter', 'rotation_period', 'surface_water',
+  ]);
 
   const handleNameFilter = ({ target }) => {
     const { value } = target;
@@ -18,8 +22,15 @@ function Filters() {
     setFilterNumeric((prevState) => ({ ...prevState, [id]: value }));
   };
 
+  const removeOption = () => {
+    const { column } = filterNumeric;
+    const newOptionsColumn = optionsColumn.filter((option) => option !== column);
+    setOptionsColumn(newOptionsColumn);
+  };
+
   const handleClick = () => {
     setFilterClick((prevState) => ([...prevState, { ...filterNumeric }]));
+    removeOption();
   };
 
   return (
@@ -37,11 +48,9 @@ function Filters() {
           id="column"
           onChange={ handleChanges }
         >
-          <option value="population">population</option>
-          <option value="orbital_period">orbital_period</option>
-          <option value="diameter">diameter</option>
-          <option value="rotation_period">rotation_period</option>
-          <option value="surface_water">surface_water</option>
+          { optionsColumn.map((options) => (
+            <option key={ options } value={ options }>{ options }</option>
+          )) }
         </select>
       </label>
       <label htmlFor="comparison">
