@@ -13,6 +13,10 @@ function Provider({ children }) {
     comparison: 'maior que',
     value: 0,
   });
+  const [order, setOrder] = useState({
+    column: 'population',
+    sort: '',
+  });
 
   const PLANETS_DATA = {
     allDatas: {
@@ -33,6 +37,10 @@ function Provider({ children }) {
     filtered: {
       filter,
       setFilter,
+    },
+    orderFilter: {
+      order,
+      setOrder,
     },
   };
 
