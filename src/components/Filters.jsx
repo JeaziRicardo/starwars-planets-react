@@ -87,7 +87,7 @@ function Filters() {
         Sort
         <select
           data-testid="column-sort"
-          name="column-sort"
+          name="column"
           id="column-sort"
         >
           { optionsColumn.map((options) => (
