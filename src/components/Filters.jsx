@@ -5,6 +5,7 @@ function Filters() {
   const {
     filterByName: { setFilterName },
     filterByClick: { setFilterClick },
+    orderFilter: { setOrder },
     filterByNumericValues: { filterNumeric, setFilterNumeric },
   } = useContext(Context);
 
@@ -15,6 +16,11 @@ function Filters() {
   const handleNameFilter = ({ target }) => {
     const { value } = target;
     setFilterName(value.toLowerCase());
+  };
+
+  const handleOrderFilter = ({ target }) => {
+    const { name, value } = target;
+    setOrder((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const handleChanges = ({ target }) => {
@@ -89,6 +95,7 @@ function Filters() {
           data-testid="column-sort"
           name="column"
           id="column-sort"
+          onChange={ handleOrderFilter }
         >
           { optionsColumn.map((options) => (
             <option key={ options } value={ options }>{ options }</option>
@@ -103,6 +110,7 @@ function Filters() {
           name="sort"
           id="input-asc"
           value="ASC"
+          onChange={ handleOrderFilter }
         />
       </label>
       <label htmlFor="input-desc">
@@ -113,6 +121,7 @@ function Filters() {
           name="sort"
           id="input-desc"
           value="DESC"
+          onChange={ handleOrderFilter }
         />
       </label>
       <button
