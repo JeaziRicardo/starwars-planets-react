@@ -83,6 +83,44 @@ function Filters() {
       >
         Filtrar
       </button>
+      <label htmlFor="column-sort">
+        Sort
+        <select
+          data-testid="column-sort"
+          name="column-sort"
+          id="column-sort"
+        >
+          { optionsColumn.map((options) => (
+            <option key={ options } value={ options }>{ options }</option>
+          )) }
+        </select>
+      </label>
+      <label htmlFor="Upward">
+        Upward
+        <input
+          data-testid="column-sort-input-asc"
+          type="radio"
+          name="input-asc"
+          id="input-asc"
+          value="ASC"
+        />
+      </label>
+      <label htmlFor="input-desc">
+        Downward
+        <input
+          data-testid="column-sort-input-desc"
+          type="radio"
+          name="input-desc"
+          id="input-desc"
+          value="DESC"
+        />
+      </label>
+      <button
+        data-testid="column-sort-button"
+        type="button"
+      >
+        Sort
+      </button>
     </section>
   );
 }
