@@ -95,12 +95,12 @@ function Filters() {
           )) }
         </select>
       </label>
-      <label htmlFor="Upward">
+      <label htmlFor="input-asc">
         Upward
         <input
           data-testid="column-sort-input-asc"
           type="radio"
-          name="input-asc"
+          name="sort"
           id="input-asc"
           value="ASC"
         />
@@ -110,7 +110,7 @@ function Filters() {
         <input
           data-testid="column-sort-input-desc"
           type="radio"
-          name="input-desc"
+          name="sort"
           id="input-desc"
           value="DESC"
         />
