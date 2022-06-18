@@ -5,7 +5,8 @@ function Filters() {
   const {
     filterByName: { setFilterName },
     filterByClick: { setFilterClick },
-    orderFilter: { setOrder },
+    orderFilter: { order, setOrder },
+    orderByClick: { setOrderClick },
     filterByNumericValues: { filterNumeric, setFilterNumeric },
   } = useContext(Context);
 
@@ -34,9 +35,13 @@ function Filters() {
     setOptionsColumn(newOptionsColumn);
   };
 
-  const handleClick = () => {
+  const handleFilterClick = () => {
     setFilterClick((prevState) => ([...prevState, { ...filterNumeric }]));
     removeOption();
+  };
+
+  const handleOrderClick = () => {
+    setOrderClick((prevState) => ({ ...prevState, ...order }));
   };
 
   return (
@@ -85,7 +90,7 @@ function Filters() {
       <button
         data-testid="button-filter"
         type="button"
-        onClick={ handleClick }
+        onClick={ handleFilterClick }
       >
         Filtrar
       </button>
@@ -127,6 +132,7 @@ function Filters() {
       <button
         data-testid="column-sort-button"
         type="button"
+        onClick={ handleOrderClick }
       >
         Sort
       </button>

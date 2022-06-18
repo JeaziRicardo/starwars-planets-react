@@ -4,10 +4,12 @@ import Context from './Context';
 import fetchAPI from '../services/API';
 
 function Provider({ children }) {
+  const ONE_LESS = -1;
   const [data, setData] = useState([]);
   const [name, setFilterName] = useState('');
   const [filter, setFilter] = useState([]);
   const [filterClick, setFilterClick] = useState([]);
+  const [orderClick, setOrderClick] = useState({});
   const [filterNumeric, setFilterNumeric] = useState({
     column: 'population',
     comparison: 'maior que',
@@ -15,7 +17,7 @@ function Provider({ children }) {
   });
   const [order, setOrder] = useState({
     column: 'population',
-    sort: '',
+    sort: 'ASC',
   });
 
   const PLANETS_DATA = {
@@ -34,13 +36,17 @@ function Provider({ children }) {
       filterClick,
       setFilterClick,
     },
-    filtered: {
-      filter,
-      setFilter,
-    },
     orderFilter: {
       order,
       setOrder,
+    },
+    orderByClick: {
+      orderClick,
+      setOrderClick,
+    },
+    filtered: {
+      filter,
+      setFilter,
     },
   };
 
@@ -57,6 +63,28 @@ function Provider({ children }) {
     const filterName = data.filter((planet) => planet.name
       .toLowerCase().includes(name));
 
+    const orderName = filterName.sort((a, b) => {
+      if (a.name > b.name) {
+        return 1;
+      }
+      if (a.name < b.name) {
+        return ONE_LESS;
+      }
+      return 0;
+    });
+
+    const filterOrder = orderName.sort((a, b) => {
+      if (b[orderClick.column] === 'unknown') return ONE_LESS;
+      switch (orderClick.sort) {
+      case 'ASC':
+        return +(a[orderClick.column]) - +(b[orderClick.column]);
+      case 'DESC':
+        return +(b[orderClick.column]) - +(a[orderClick.column]);
+      default:
+        return 0;
+      }
+    });
+
     const filterCondition = filterClick.reduce((acc, filters) => acc.filter((datas) => {
       switch (filters.comparison) {
       case 'maior que':
@@ -68,10 +96,10 @@ function Provider({ children }) {
       default:
         return undefined;
       }
-    }), filterName);
+    }), filterOrder);
 
     setFilter(filterCondition);
-  }, [data, name, filterClick]);
+  }, [data, name, filterClick, orderClick, ONE_LESS]);
 
   return (
     <Context.Provider value={ PLANETS_DATA }>
